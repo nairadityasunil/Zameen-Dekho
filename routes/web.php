@@ -6,8 +6,22 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LoginController::class, 'login_form'])->name('login_form');
-Route::post('/authenticate',[LoginController::class,'authenticate'])->name('authenticate');
+Route::get('/',[LoginController::class,'index_page'])->name('zameen_dekho');
+
+// Admin related routes
+Route::get('/admin-login', [LoginController::class, 'login_form'])->name
+('admin-login');
+Route::get('/admin-dashboard',[PropertyController::class,'admin_dashboard'])->name('admin-dashboard');
+Route::post('/authenticate_admin',[LoginController::class,'authenticate_admin'])->name('authenticate_admin');
+
+// User Related Routes
+Route::get('/new-user',[UserController::class,'new_user'])->name('new-user');
+Route::post('/register-user',[UserController::class,'register_user'])->name('register-user');
+Route::get('/user-login',[LoginController::class,'user_login'])->name('user-login');
+Route::post('/authenticate_user',[LoginController::class,'authenticate_user'])->name('authenticate_user');
+Route::get('/update-user',[UserController::class,'update_user'])->name('update-user');
+Route::post('/save-user-update/{id}', [UserController::class, 'save_user_update'])->name('save_user_update');
+
 Route::get('/home',[HomeController::class,'home'])->name('home');
 
 // Routes related to properties

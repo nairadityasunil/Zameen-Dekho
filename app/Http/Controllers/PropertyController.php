@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property_master;
+use App\Models\Wishlist;
 
 class PropertyController extends Controller
 {
+    public function admin_dashboard()
+    {
+        return view('admin_dashboard');
+    }
+
     public function new_property()
     {
         // Return form for new property
@@ -15,8 +21,6 @@ class PropertyController extends Controller
 
     public function save_new_property(Request $request)
     {
-
-
         $new_property = new Property_master(); // Object of model
         // Taking inputs
         $new_property->owner = $request->owner;
@@ -69,7 +73,14 @@ class PropertyController extends Controller
     {
         $property_details = Property_master::find($id);
         if (!is_null($property_details)) {
-            $property_details->delete(); // If entry found in the database then deleting it
+            $wishlist = Wishlist::where('property_id','=', $property_details->id)->first();
+            if(!is_null($wishlist))
+            {
+                if($wishlist->delete())
+                {
+                    $property_details->delete(); // If entry found in the database then deleting it
+                }
+            }
         }
         return redirect()->route('all_properties');
     }

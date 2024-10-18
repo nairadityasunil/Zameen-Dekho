@@ -18,17 +18,25 @@
     <center>
         <div class="card my-3 login-card w-50 shadow-sm">
             <div class="card-body overflow-auto">
-                <h4 class="text-center">Login</h4>
-    
+                <h4 class="text-center">Welcome New User</h4>
+
                 <!-- Display the error message if it exists in the session -->
                 @if (session('status'))
                     <div class="error-message">
                         {{ session('status') }}
                     </div>
                 @endif
-    
-                <form action="{{ route('authenticate') }}" method="POST">
+
+                <form action="{{ route('register-user') }}" method="POST">
                     @csrf <!-- CSRF Token for security -->
+                    <div class="form-group mb-3">
+                        <label for="username" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" id="username" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="username" class="form-label">Contact No : </label>
+                        <input type="text" name="contact_no" class="form-control" id="username" required>
+                    </div>
                     <div class="form-group mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" name="username" class="form-control" id="username" required>
@@ -37,8 +45,9 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" name="password" class="form-control" id="password" required>
                     </div>
+
                     <div class="d-flex justify-content-center">
-                        <button type="submit" id="submit_btn" class="btn btn-dark">Login</button>
+                        <button type="submit" id="submit_btn" class="btn btn-dark">Register</button>
                     </div>
                 </form>
             </div>
@@ -48,3 +57,4 @@
 </body>
 
 </html>
+

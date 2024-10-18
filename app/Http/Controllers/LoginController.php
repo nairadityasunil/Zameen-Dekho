@@ -7,16 +7,26 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    public function index_page()
+    {
+        return view('zameen_dekho');
+    }
+
     // Function to show login form
     public function login_form()
     {
-        return view('login_page');
+        return view('login_page_admin');
     }
 
-    public function authenticate(Request $request)
+    public function user_login()
     {
-        
-        $find_user = User_master::where('username','=', $request->username)->first();
+        return view('login_page_user');
+    }
+
+    public function authenticate_user(Request $request)
+    {
+        $find_user = User_master::where('role','=','user')->where('username','=',$request->username)->first();
+
         if($find_user)
         {
             $user_id = $find_user->id;
@@ -26,8 +36,22 @@ class LoginController extends Controller
                 // If the password matches then ....
                 session(['user' => $user_id]);
 
-                return redirect('/home');
+                if(session()->has('user'))
+                {
+                    return redirect('/home');
+                }
             }
+        }
+    }
+
+    public function authenticate_admin(Request $request)
+    {
+        $admin_details = User_master::where('role','=','admin')->where('username','=',$request->username)->first();
+
+        if(!is_null($admin_details) && ($admin_details->password == md5($request->password)))
+        {
+            // If the admin user is found and the password matches then....
+            return redirect()->route('admin-dashboard');
         }
     }
 }

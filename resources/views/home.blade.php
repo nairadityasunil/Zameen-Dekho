@@ -15,13 +15,16 @@
 <body>
     <div class="container my-3">
         <h3>User Home - All Properties</h3>
+        <br>
+        <a href="{{route('wishlist')}}" class="btn btn-dark">Wishlist</a>
+        <a href="{{route('update-user')}}" class="btn btn-success">Update Profile</a>
         <div class="row my-3">
             @foreach ($properties as $p)
                 <div class="col-sm-4 my-2 ">
                     <div class="card" style="width: 25rem;">
                         <img class="card-img-top" src="{{$p->image_url}}" alt="Card image cap">
                         <div class="card-body">
-                            <table>
+                            <table> 
                                 <tr>
                                     <td>
                                         <b>Owner : </b>{{$p->owner}}
