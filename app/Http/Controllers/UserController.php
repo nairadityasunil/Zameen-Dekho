@@ -54,11 +54,10 @@ class UserController extends Controller
 
     public function remove_wishlist($id)
     {
-        $property = Wishlist::find($id);
-        if ($property) {
-            $property->delete();
-            return redirect()->route('wishlist');
-        }
+        $user_id = session()->get('user');
+        $property = Wishlist::where('property_id', '=', $id)->where('user_id', '=', $user_id) ->first();
+        $property->delete();
+        return redirect()->route('wishlist');
     }
 
     public function update_user()
